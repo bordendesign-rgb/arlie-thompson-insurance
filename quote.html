@@ -32,7 +32,7 @@
         label { display: block; margin-bottom: 8px; font-weight: 600; }
         input, select, textarea { width: 100%; padding: 14px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
         
-        .hidden { display: none; }
+        .section-field { display: none; }
         .btn-submit { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.3s; text-align: center; display: block; text-decoration: none; }
         .btn-submit:hover { background: var(--secondary); color: white; }
         
@@ -70,13 +70,13 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form id="quoteForm" name="quote-request" data-netlify="true" onsubmit="prepareSubmission()">
+        <form id="quoteForm" name="quote-request" method="POST" data-netlify="true">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
             <input type="email" name="email" required>
             <label>Insurance Type</label>
-            <select id="insuranceType" name="insurance-type" onchange="updateVisibility()" required>
+            <select id="insuranceType" name="insurance-type" onchange="updateForm()" required>
                 <option value="">Select an option</option>
                 <option value="auto">Auto</option>
                 <option value="home">Home</option>
@@ -87,59 +87,59 @@
                 <option value="tour">Tour Operations (Contact Us)</option>
             </select>
 
-            <div id="autoFields" class="hidden">
+            <div id="autoFields" class="section-field">
                 <label>Make, Model & Year</label>
-                <input type="text" data-name="auto-details" placeholder="e.g. Toyota Hilux 2022">
+                <input type="text" name="auto-details" placeholder="e.g. Toyota Hilux 2022">
                 <label>Coverage Value</label>
-                <input type="number" data-name="auto-value" placeholder="Value in USD">
+                <input type="number" name="auto-value" placeholder="Value in USD">
                 <div class="note">Note: Any vehicle 15 years or older can only apply to liability.</div>
             </div>
 
-            <div id="propertyFields" class="hidden">
+            <div id="propertyFields" class="section-field">
                 <label>Type of Construction</label>
-                <select data-name="construction-type">
+                <select name="construction-type">
                     <option>Wood</option>
                     <option>Concrete</option>
                     <option>Mixed (50% concrete / 50% wood)</option>
                 </select>
                 <label>Island Location</label>
-                <input type="text" data-name="location">
+                <input type="text" name="location">
                 <label>Building Value</label>
-                <input type="number" data-name="building-value">
+                <input type="number" name="building-value">
                 <label>Content Value</label>
-                <input type="number" data-name="content-value">
+                <input type="number" name="content-value">
                 <div class="note">Note: Land value is excluded from building replacement coverage.</div>
             </div>
 
-            <div id="boatFields" class="hidden">
+            <div id="boatFields" class="section-field">
                 <label>Boat Size</label>
-                <input type="text" data-name="boat-size">
+                <input type="text" name="boat-size">
                 <label>Type</label>
-                <input type="text" data-name="boat-type" placeholder="e.g. Center Console, Catamaran">
+                <input type="text" name="boat-type" placeholder="e.g. Center Console, Catamaran">
                 <label>Engine(s)</label>
-                <input type="text" data-name="engines">
+                <input type="text" name="engines">
                 <label>Hull Value</label>
-                <input type="number" data-name="hull-value">
+                <input type="number" name="hull-value">
                 <label>Engine(s) Value</label>
-                <input type="number" data-name="engine-value">
+                <input type="number" name="engine-value">
                 <label>Electronics Value</label>
-                <input type="number" data-name="electronics-value">
+                <input type="number" name="electronics-value">
                 <label>Liability Coverage</label>
-                <select data-name="liability">
+                <select name="liability">
                     <option>No, thanks</option>
                     <option>Yes, please include</option>
                 </select>
             </div>
 
-            <div id="contactFields" class="hidden">
+            <div id="contactFields" class="section-field">
                 <div class="note">For this specialized request, Brennan Thompson personally handles your inquiry. Please contact us directly via WhatsApp.</div>
                 <a href="https://wa.me/50432044668" class="btn-submit">Chat on WhatsApp</a>
             </div>
 
-            <div id="messageBox" class="hidden">
+            <div id="messageBox" class="section-field">
                 <label>Additional Notes</label>
-                <textarea data-name="notes" rows="4"></textarea>
-                <button type="submit" class="btn-submit" style="border: none; width: 100%;">Submit Request</button>
+                <textarea name="notes" rows="4"></textarea>
+                <button type="submit" class="btn-submit">Submit Request</button>
             </div>
         </form>
     </main>
@@ -159,38 +159,22 @@
     <script>
         function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
         
-        function updateVisibility() {
+        function updateForm() {
             const type = document.getElementById('insuranceType').value;
-            const fields = ['autoFields', 'propertyFields', 'boatFields', 'contactFields', 'messageBox'];
-            
-            fields.forEach(id => document.getElementById(id).classList.add('hidden'));
+            const fields = document.querySelectorAll('.section-field');
+            fields.forEach(f => f.style.display = 'none');
 
-            if(type === 'auto') document.getElementById('autoFields').classList.remove('hidden');
-            else if(type === 'home' || type === 'business') document.getElementById('propertyFields').classList.remove('hidden');
-            else if(type === 'boat') document.getElementById('boatFields').classList.remove('hidden');
-            else if(type === 'life' || type === 'medical' || type === 'tour') document.getElementById('contactFields').classList.remove('hidden');
-            
-            if(type && type !== 'life' && type !== 'medical' && type !== 'tour') {
-                document.getElementById('messageBox').classList.remove('hidden');
-            }
-        }
-
-        function prepareSubmission() {
-            // Disable everything first to ensure a clean state
-            document.querySelectorAll('input[data-name], select[data-name], textarea[data-name]').forEach(el => {
-                el.removeAttribute('name');
-            });
-
-            // Find visible section
-            const visibleSection = document.querySelector('div:not(.hidden)[id$="Fields"]');
-            if(visibleSection) {
-                visibleSection.querySelectorAll('[data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
-            }
-            
-            // Handle message box if visible
-            const msgBox = document.getElementById('messageBox');
-            if(!msgBox.classList.contains('hidden')) {
-                msgBox.querySelectorAll('[data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
+            if(type === 'auto') {
+                document.getElementById('autoFields').style.display = 'block';
+                document.getElementById('messageBox').style.display = 'block';
+            } else if(type === 'home' || type === 'business') {
+                document.getElementById('propertyFields').style.display = 'block';
+                document.getElementById('messageBox').style.display = 'block';
+            } else if(type === 'boat') {
+                document.getElementById('boatFields').style.display = 'block';
+                document.getElementById('messageBox').style.display = 'block';
+            } else if(type === 'life' || type === 'medical' || type === 'tour') {
+                document.getElementById('contactFields').style.display = 'block';
             }
         }
     </script>
