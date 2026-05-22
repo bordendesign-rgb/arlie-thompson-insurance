@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Arlie Thompson Insurance</title>
+    
+    <link rel="icon" href="arlie-thompson-logo-2.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #004a99; --secondary: #0077be; --dark: #1a1a1a; --light: #f8f9fa; --accent: #ffd700; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--dark); background: #ffffff; }
+
+        header { background: #fff; padding: 10px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { width: 132px; }
+        .logo-container img { width: 100%; height: auto; display: block; }
+        
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 1.1rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--primary); }
+
+        .page-container { max-width: 800px; margin: 0 auto; padding: 80px 6%; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 30px; text-align: center; font-size: 2.5rem; }
+        
+        /* Contact Image */
+        .contact-img { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        .contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .contact-info { padding: 30px; background: var(--light); border-radius: 12px; }
+        .contact-info p { margin-bottom: 12px; font-weight: 600; font-size: 1rem; }
+        
+        .map-container { border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .map-container iframe { width: 100%; height: 100%; border: 0; min-height: 250px; }
+        
+        form { background: var(--light); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        form h2 { margin-bottom: 20px; color: var(--primary); font-family: 'Playfair Display', serif; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; }
+        input, textarea { width: 100%; padding: 14px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
+        
+        .btn-submit { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.3s; }
+        .btn-submit:hover { background: var(--secondary); }
+
+        footer { background: var(--dark); color: white; padding: 50px 6%; text-align: center; margin-top: 50px; }
+        .footer-content { max-width: 800px; margin: 0 auto; }
+        .social-links { margin: 20px 0; display: flex; justify-content: center; gap: 30px; }
+        .social-links a { color: white; text-decoration: none; font-size: 1.8rem; transition: 0.3s; }
+        .social-links a:hover { color: var(--accent); }
+        .footer-info { font-size: 0.9rem; opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .contact-section { grid-template-columns: 1fr; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #fff; padding: 20px; border-bottom: 2px solid var(--primary); text-align: center; gap: 20px; }
+            .nav-links.active { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container"><img src="arlie-thompson-logo-2.png" alt="Arlie Thompson Insurance"></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="quote.html">Get a Quote</a>
+            <a href="claims.html">Claims</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="page-container">
+        <img src="at-insurance-8.jpeg" alt="Contact Us" class="contact-img">
+        <h1>Contact Arlie Thompson Insurance</h1>
+        
+        <div class="contact-section">
+            <div class="contact-info">
+                <p>📍 <strong>Location:</strong> Carretera Principal, French Harbour, Roatan</p>
+                <p>📞 <strong>Phone:</strong> (504) 3204-4668</p>
+                <p>💬 <strong>WhatsApp:</strong> (504) 3204-4668</p>
+                <p>✉️ <strong>Email:</strong> atinsuranceroatan@gmail.com</p>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3856.7648358249626!2d-86.46479672465378!3d16.352873033502755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6735e5d165682b%3A0x867b9386d34e2c88!2sArlie%20Thompson%20Insurance!5e0!3m2!1sen!2shn!4v1716327000000!5m2!1sen!2shn" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <form>
+            <h2>General Inquiry</h2>
+            <label>Name</label>
+            <input type="text" required>
+            <label>Email</label>
+            <input type="email" required>
+            <label>Subject</label>
+            <input type="text">
+            <label>Message</label>
+            <textarea rows="5" required></textarea>
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Arlie Thompson Insurance</h3>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100063579250538" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/atinsuranceroatan/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="footer-info">Carretera Principal, French Harbour, Islas de la Bahía, Honduras | (504) 3204-4668 | atinsuranceroatan@gmail.com</p>
+            <p style="margin-top: 15px; font-size: 0.8rem;">© 2026 Arlie Thompson Insurance. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+    </script>
+</body>
+</html>

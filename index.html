@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arlie Thompson Insurance | Bay Islands Trusted Brokerage</title>
+    
+    <link rel="icon" href="arlie-thompson-logo-2.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #004a99; --secondary: #0077be; --dark: #1a1a1a; --light: #f8f9fa; --accent: #ffd700; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--dark); }
+
+        header { background: #fff; padding: 10px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { width: 132px; }
+        .logo-container img { width: 100%; height: auto; display: block; }
+        
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 1.1rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--primary); }
+
+        .hero { padding: 100px 6%; background: linear-gradient(rgba(0,74,153,0.8), rgba(0,74,153,0.8)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1600&q=80'); background-size: cover; text-align: center; color: white; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 20px; }
+        .btn { display: inline-block; padding: 15px 30px; background: var(--accent); color: var(--dark); font-weight: 700; border-radius: 5px; text-decoration: none; margin-top: 20px; }
+
+        .section { padding: 80px 6%; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        
+        /* Reverted: Images now use natural height and width */
+        .grid img { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 10px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: block;
+        }
+        
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px; color: var(--primary); }
+
+        footer { background: var(--dark); color: white; padding: 50px 6%; text-align: center; }
+        .footer-content { max-width: 800px; margin: 0 auto; }
+        .social-links { margin: 20px 0; display: flex; justify-content: center; gap: 30px; }
+        .social-links a { color: white; text-decoration: none; font-size: 1.8rem; transition: 0.3s; }
+        .social-links a:hover { color: var(--accent); }
+        .footer-info { font-size: 0.9rem; opacity: 0.8; }
+
+        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #fff; padding: 20px; border-bottom: 2px solid var(--primary); text-align: center; gap: 20px; }
+            .nav-links.active { display: flex; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container"><img src="arlie-thompson-logo-2.png" alt="Arlie Thompson Insurance"></div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="quote.html">Get a Quote</a>
+            <a href="claims.html">Claims</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Protecting Our Island Home Since 1991</h1>
+        <p>Expert insurance solutions for Roatan, Utila, and Guanaja.</p>
+        <a href="quote.html" class="btn">Get Your Quote Now</a>
+    </section>
+
+    <section class="section">
+        <div class="grid">
+            <div>
+                <h2>Your Legacy, Protected</h2>
+                <p>Arlie Thompson Insurance has been serving the Bay Islands for over 35 years. Founded by Arlie Thompson and now carried forward by Brennan and Devon Thompson, we provide full-service property, casualty, and specialized business insurance tailored to the island lifestyle.</p>
+            </div>
+            <img src="at-insurance-1.jpg" alt="Brennan and Devon Thompson receiving award">
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--light);">
+        <div class="grid">
+            <img src="at-insurance-2.jpeg" alt="The Arlie Thompson Insurance Team">
+            <div>
+                <h2>The Island's Dream Team</h2>
+                <p>Our brokerage is built on reliability and a deep understanding of local needs. Led by the Thompson brothers, our team—including Kerwin Borden and Deborah Webster—is committed to ensuring you, your family, and your business are fully protected against the unexpected.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Arlie Thompson Insurance</h3>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100063579250538" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/atinsuranceroatan/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="footer-info">Carretera Principal, French Harbour, Islas de la Bahía, Honduras | (504) 3204-4668 | atinsuranceroatan@gmail.com</p>
+            <p style="margin-top: 15px; font-size: 0.8rem;">&copy; 2026 Arlie Thompson Insurance. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+    </script>
+</body>
+</html>
