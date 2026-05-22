@@ -70,13 +70,13 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form id="quoteForm" name="quote-request" data-netlify="true">
+        <form id="quoteForm" name="quote-request" data-netlify="true" onsubmit="prepareSubmission()">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
             <input type="email" name="email" required>
             <label>Insurance Type</label>
-            <select id="insuranceType" name="insurance-type" onchange="updateForm()" required>
+            <select id="insuranceType" name="insurance-type" onchange="updateVisibility()" required>
                 <option value="">Select an option</option>
                 <option value="auto">Auto</option>
                 <option value="home">Home</option>
@@ -159,33 +159,38 @@
     <script>
         function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
         
-        function updateForm() {
+        function updateVisibility() {
             const type = document.getElementById('insuranceType').value;
-            const sections = ['autoFields', 'propertyFields', 'boatFields', 'contactFields', 'messageBox'];
+            const fields = ['autoFields', 'propertyFields', 'boatFields', 'contactFields', 'messageBox'];
             
-            // 1. Hide all and strip names
-            sections.forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-                document.querySelectorAll('#' + id + ' [data-name]').forEach(el => el.removeAttribute('name'));
+            fields.forEach(id => document.getElementById(id).classList.add('hidden'));
+
+            if(type === 'auto') document.getElementById('autoFields').classList.remove('hidden');
+            else if(type === 'home' || type === 'business') document.getElementById('propertyFields').classList.remove('hidden');
+            else if(type === 'boat') document.getElementById('boatFields').classList.remove('hidden');
+            else if(type === 'life' || type === 'medical' || type === 'tour') document.getElementById('contactFields').classList.remove('hidden');
+            
+            if(type && type !== 'life' && type !== 'medical' && type !== 'tour') {
+                document.getElementById('messageBox').classList.remove('hidden');
+            }
+        }
+
+        function prepareSubmission() {
+            // Disable everything first to ensure a clean state
+            document.querySelectorAll('input[data-name], select[data-name], textarea[data-name]').forEach(el => {
+                el.removeAttribute('name');
             });
 
-            // 2. Identify active section
-            let activeId = '';
-            if(type === 'auto') activeId = 'autoFields';
-            else if(type === 'home' || type === 'business') activeId = 'propertyFields';
-            else if(type === 'boat') activeId = 'boatFields';
-            else if(type === 'life' || type === 'medical' || type === 'tour') activeId = 'contactFields';
-
-            // 3. Show active section and re-add names
-            if(activeId) {
-                document.getElementById(activeId).classList.remove('hidden');
-                document.querySelectorAll('#' + activeId + ' [data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
-                
-                // 4. Always show and name the message box if a valid insurance type is selected
-                if(activeId !== 'contactFields') {
-                    document.getElementById('messageBox').classList.remove('hidden');
-                    document.querySelectorAll('#messageBox [data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
-                }
+            // Find visible section
+            const visibleSection = document.querySelector('div:not(.hidden)[id$="Fields"]');
+            if(visibleSection) {
+                visibleSection.querySelectorAll('[data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
+            }
+            
+            // Handle message box if visible
+            const msgBox = document.getElementById('messageBox');
+            if(!msgBox.classList.contains('hidden')) {
+                msgBox.querySelectorAll('[data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
             }
         }
     </script>
