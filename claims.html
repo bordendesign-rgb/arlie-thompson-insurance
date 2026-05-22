@@ -71,7 +71,7 @@
         <img src="at-insurance-5.jpeg" alt="Assistance and Support" class="claim-img">
         <h1>File a Claim</h1>
         
-        <form id="claimForm" name="claim-submission" data-netlify="true" enctype="multipart/form-data" onsubmit="prepareClaimForm()">
+        <form id="claimForm" name="claim-submission" data-netlify="true" enctype="multipart/form-data">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
@@ -92,7 +92,7 @@
 
             <div id="assetFields" class="hidden">
                 <label>Make, Model & Year</label>
-                <input type="text" name="vehicle-details" placeholder="e.g. Toyota Hilux 2022">
+                <input type="text" data-name="vehicle-details" placeholder="e.g. Toyota Hilux 2022">
             </div>
 
             <label>Third Party Involved?</label>
@@ -106,7 +106,7 @@
 
             <div id="policeUpload" class="hidden">
                 <label>Upload Police Statement</label>
-                <input type="file" name="police-statement" accept=".pdf, .jpg, .png, .jpeg">
+                <input type="file" data-name="police-statement" accept=".pdf, .jpg, .png, .jpeg">
             </div>
 
             <label>Brief Description of Incident</label>
@@ -143,22 +143,23 @@
             const assetDiv = document.getElementById('assetFields');
             if(type === 'auto' || type === 'boat') {
                 assetDiv.classList.remove('hidden');
+                assetDiv.querySelector('[data-name]').setAttribute('name', 'vehicle-details');
             } else {
                 assetDiv.classList.add('hidden');
+                assetDiv.querySelector('[data-name]').removeAttribute('name');
             }
         }
 
         function togglePolice() {
             const val = document.getElementById('thirdParty').value;
             const div = document.getElementById('policeUpload');
-            if(val === 'yes') div.classList.remove('hidden');
-            else div.classList.add('hidden');
-        }
-
-        function prepareClaimForm() {
-            // Disable hidden inputs so they don't appear in the email
-            const hiddenElements = document.querySelectorAll('.hidden input, .hidden select, .hidden textarea');
-            hiddenElements.forEach(el => el.disabled = true);
+            if(val === 'yes') {
+                div.classList.remove('hidden');
+                div.querySelector('[data-name]').setAttribute('name', 'police-statement');
+            } else {
+                div.classList.add('hidden');
+                div.querySelector('[data-name]').removeAttribute('name');
+            }
         }
     </script>
 </body>

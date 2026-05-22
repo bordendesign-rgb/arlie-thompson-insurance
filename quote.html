@@ -70,7 +70,7 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form id="quoteForm" name="quote-request" data-netlify="true" onsubmit="prepareForm()">
+        <form id="quoteForm" name="quote-request" data-netlify="true">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
@@ -89,43 +89,43 @@
 
             <div id="autoFields" class="hidden">
                 <label>Make, Model & Year</label>
-                <input type="text" name="auto-details" placeholder="e.g. Toyota Hilux 2022">
+                <input type="text" data-name="auto-details" placeholder="e.g. Toyota Hilux 2022">
                 <label>Coverage Value</label>
-                <input type="number" name="auto-value" placeholder="Value in USD">
+                <input type="number" data-name="auto-value" placeholder="Value in USD">
                 <div class="note">Note: Any vehicle 15 years or older can only apply to liability.</div>
             </div>
 
             <div id="propertyFields" class="hidden">
                 <label>Type of Construction</label>
-                <select name="construction-type">
+                <select data-name="construction-type">
                     <option>Wood</option>
                     <option>Concrete</option>
                     <option>Mixed (50% concrete / 50% wood)</option>
                 </select>
                 <label>Island Location</label>
-                <input type="text" name="location">
+                <input type="text" data-name="location">
                 <label>Building Value</label>
-                <input type="number" name="building-value">
+                <input type="number" data-name="building-value">
                 <label>Content Value</label>
-                <input type="number" name="content-value">
+                <input type="number" data-name="content-value">
                 <div class="note">Note: Land value is excluded from building replacement coverage.</div>
             </div>
 
             <div id="boatFields" class="hidden">
                 <label>Boat Size</label>
-                <input type="text" name="boat-size">
+                <input type="text" data-name="boat-size">
                 <label>Type</label>
-                <input type="text" name="boat-type" placeholder="e.g. Center Console, Catamaran">
+                <input type="text" data-name="boat-type" placeholder="e.g. Center Console, Catamaran">
                 <label>Engine(s)</label>
-                <input type="text" name="engines">
+                <input type="text" data-name="engines">
                 <label>Hull Value</label>
-                <input type="number" name="hull-value">
+                <input type="number" data-name="hull-value">
                 <label>Engine(s) Value</label>
-                <input type="number" name="engine-value">
+                <input type="number" data-name="engine-value">
                 <label>Electronics Value</label>
-                <input type="number" name="electronics-value">
+                <input type="number" data-name="electronics-value">
                 <label>Liability Coverage</label>
-                <select name="liability">
+                <select data-name="liability">
                     <option>No, thanks</option>
                     <option>Yes, please include</option>
                 </select>
@@ -138,7 +138,7 @@
 
             <div id="messageBox" class="hidden">
                 <label>Additional Notes</label>
-                <textarea name="notes" rows="4"></textarea>
+                <textarea data-name="notes" rows="4"></textarea>
                 <button type="submit" class="btn-submit" style="border: none; width: 100%;">Submit Request</button>
             </div>
         </form>
@@ -161,22 +161,28 @@
         
         function updateForm() {
             const type = document.getElementById('insuranceType').value;
-            document.getElementById('autoFields').classList.add('hidden');
-            document.getElementById('propertyFields').classList.add('hidden');
-            document.getElementById('boatFields').classList.add('hidden');
-            document.getElementById('contactFields').classList.add('hidden');
-            document.getElementById('messageBox').classList.add('hidden');
+            // Hide all and remove names
+            const sections = ['autoFields', 'propertyFields', 'boatFields', 'contactFields', 'messageBox'];
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+                document.querySelectorAll('#' + id + ' [data-name]').forEach(el => el.removeAttribute('name'));
+            });
 
-            if(type === 'auto') { document.getElementById('autoFields').classList.remove('hidden'); document.getElementById('messageBox').classList.remove('hidden'); }
-            else if(type === 'home' || type === 'business') { document.getElementById('propertyFields').classList.remove('hidden'); document.getElementById('messageBox').classList.remove('hidden'); }
-            else if(type === 'boat') { document.getElementById('boatFields').classList.remove('hidden'); document.getElementById('messageBox').classList.remove('hidden'); }
-            else if(type === 'life' || type === 'medical' || type === 'tour') { document.getElementById('contactFields').classList.remove('hidden'); }
-        }
+            // Show selected and add names back
+            let activeId = '';
+            if(type === 'auto') activeId = 'autoFields';
+            else if(type === 'home' || type === 'business') activeId = 'propertyFields';
+            else if(type === 'boat') activeId = 'boatFields';
+            else if(type === 'life' || type === 'medical' || type === 'tour') activeId = 'contactFields';
 
-        function prepareForm() {
-            // Disable all inputs that are currently hidden
-            const hiddenElements = document.querySelectorAll('.hidden input, .hidden select, .hidden textarea');
-            hiddenElements.forEach(el => el.disabled = true);
+            if(activeId) {
+                document.getElementById(activeId).classList.remove('hidden');
+                document.querySelectorAll('#' + activeId + ' [data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
+            }
+            if(activeId && activeId !== 'contactFields') {
+                document.getElementById('messageBox').classList.remove('hidden');
+                document.querySelectorAll('#messageBox [data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
+            }
         }
     </script>
 </body>
