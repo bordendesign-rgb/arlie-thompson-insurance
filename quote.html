@@ -4,157 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get a Quote | Arlie Thompson Insurance</title>
-    
-    <link rel="icon" href="arlie-thompson-logo-2.png" type="image/png">
+    <link rel="icon" href="borden-logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #004a99; --secondary: #0077be; --dark: #1a1a1a; --light: #f8f9fa; --accent: #ffd700; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--dark); background: #ffffff; }
-
-        header { background: #fff; padding: 10px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
+        header { background: #fff; padding: 10px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); }
         .logo-container { width: 132px; }
         .logo-container img { width: 100%; height: auto; display: block; }
-        
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 600; font-size: 1.1rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
-        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--primary); }
-
-        .page-container { max-width: 800px; margin: 0 auto; padding: 80px 6%; }
-        .quote-hero-img { width: 100%; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h1 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 30px; text-align: center; font-size: 2.5rem; }
-        
+        .page-container { max-width: 800px; margin: 0 auto; padding: 40px 6%; }
         form { background: var(--light); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         label { display: block; margin-bottom: 8px; font-weight: 600; }
-        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
-        
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 6px; }
         .hidden-section { display: none; }
-        
-        .btn-submit { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.3s; text-align: center; display: block; text-decoration: none; }
-        .btn-submit:hover { background: var(--secondary); color: white; }
-        
-        .note { background: #eef6ff; padding: 15px; border-left: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.9rem; color: #333; }
-        
-        footer { background: var(--dark); color: white; padding: 50px 6%; text-align: center; margin-top: 50px; }
-        .footer-content { max-width: 800px; margin: 0 auto; }
-        .social-links { margin: 20px 0; display: flex; justify-content: center; gap: 30px; }
-        .social-links a { color: white; text-decoration: none; font-size: 1.8rem; transition: 0.3s; }
-        .social-links a:hover { color: var(--accent); }
-        .footer-info { font-size: 0.9rem; opacity: 0.8; }
-
-        @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #fff; padding: 20px; border-bottom: 2px solid var(--primary); text-align: center; gap: 20px; }
-            .nav-links.active { display: flex; }
-        }
+        .btn-submit { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: center; display: block; }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="logo-container"><img src="arlie-thompson-logo-2.png" alt="Arlie Thompson Insurance"></div>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <nav class="nav-links" id="navLinks">
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="quote.html">Get a Quote</a>
-            <a href="claims.html">Claims</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+        <div class="logo-container"><img src="borden-logo.png" alt="Arlie Thompson Insurance"></div>
     </header>
 
     <main class="page-container">
-        <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
-        
         <h1>Request a Quote</h1>
-        <form name="quote-request" method="POST" data-netlify="true" onsubmit="prepareForm()">
-    <label>Full Name</label>
-    <input type="text" name="name" required>
-    <label>Email Address</label>
-    <input type="email" name="email" required>
-    <label>Insurance Type</label>
-    <select id="insuranceType" name="insurance-type" onchange="showFields()" required>
-        <option value="">Select an option</option>
-        <option value="auto">Auto</option>
-        <option value="home">Home</option>
-        <option value="business">Business</option>
-        <option value="boat">Boat</option>
-        <option value="life">Life (Contact Us)</option>
-        <option value="medical">Medical (Contact Us)</option>
-        <option value="tour">Tour Operations (Contact Us)</option>
-    </select>
+        <form name="quote-request" method="POST" data-netlify="true">
+            <label>Full Name</label>
+            <input type="text" name="name" required>
+            <label>Email Address</label>
+            <input type="email" name="email" required>
+            <label>Insurance Type</label>
+            <select id="insuranceType" name="insurance-type" onchange="showFields()" required>
+                <option value="">Select an option</option>
+                <option value="auto">Auto</option>
+                <option value="home">Home</option>
+                <option value="business">Business</option>
+                <option value="boat">Boat</option>
+                <option value="life">Life (Contact Us)</option>
+                <option value="medical">Medical (Contact Us)</option>
+                <option value="tour">Tour Operations (Contact Us)</option>
+            </select>
 
-    <div id="autoFields" class="hidden-section">
-        <label>Make, Model & Year</label>
-        <input type="text" data-field="auto-details">
-        <label>Coverage Value</label>
-        <input type="number" data-field="auto-value">
-    </div>
-    <div id="messageBox" class="hidden-section">
-        <label>Additional Notes</label>
-        <textarea data-field="notes" rows="4"></textarea>
-        <button type="submit" class="btn-submit">Submit Request</button>
-    </div>
-</form>
+            <div id="autoFields" class="hidden-section">
+                <label>Make, Model & Year</label>
+                <input type="text" data-field="auto-details">
+                <label>Coverage Value</label>
+                <input type="number" data-field="auto-value">
+            </div>
 
-<script>
-    function showFields() {
-        const type = document.getElementById('insuranceType').value;
-        document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none');
-        
-        if (type === 'auto') { document.getElementById('autoFields').style.display = 'block'; document.getElementById('messageBox').style.display = 'block'; }
-        else if (type === 'home' || type === 'business') { document.getElementById('propertyFields').style.display = 'block'; document.getElementById('messageBox').style.display = 'block'; }
-        else if (type === 'boat') { document.getElementById('boatFields').style.display = 'block'; document.getElementById('messageBox').style.display = 'block'; }
-        else if (type === 'life' || type === 'medical' || type === 'tour') { document.getElementById('contactFields').style.display = 'block'; }
-    }
+            <div id="propertyFields" class="hidden-section">
+                <label>Type of Construction</label>
+                <select data-field="construction-type">
+                    <option>Wood</option>
+                    <option>Concrete</option>
+                    <option>Mixed</option>
+                </select>
+                <label>Building Value</label>
+                <input type="number" data-field="building-value">
+            </div>
 
-    function prepareForm() {
-        // Find the visible section
-        const visibleSection = document.querySelector('.hidden-section:not([style*="display: none"])');
-        if (visibleSection) {
-            visibleSection.querySelectorAll('[data-field]').forEach(input => {
-                input.setAttribute('name', input.getAttribute('data-field'));
-            });
-        }
-        // Always handle notes
-        const msgBox = document.getElementById('messageBox');
-        if (msgBox.style.display !== 'none') {
-            const noteInput = document.querySelector('[data-field="notes"]');
-            noteInput.setAttribute('name', 'notes');
-        }
-    }
-</script>
-        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
-        
+            <div id="boatFields" class="hidden-section">
+                <label>Boat Size</label>
+                <input type="text" data-field="boat-size">
+                <label>Hull Value</label>
+                <input type="number" data-field="hull-value">
+            </div>
+
+            <div id="contactFields" class="hidden-section">
+                <p>Please contact us via WhatsApp.</p>
+                <a href="https://wa.me/50432044668" class="btn-submit">Chat on WhatsApp</a>
+            </div>
+
+            <div id="messageBox" class="hidden-section">
+                <label>Additional Notes</label>
+                <textarea data-field="notes" rows="4"></textarea>
+                <button type="submit" class="btn-submit">Submit Request</button>
+            </div>
+        </form>
+    </main>
+
+    <script>
         function showFields() {
             const type = document.getElementById('insuranceType').value;
-            // 1. Hide all sections and REMOVE names from all inputs
+            // Hide all and clear names
             document.querySelectorAll('.hidden-section').forEach(el => {
                 el.style.display = 'none';
                 el.querySelectorAll('[data-field]').forEach(input => input.removeAttribute('name'));
             });
-            
-            // 2. Determine target section and ADD names to its inputs
+
+            // Show relevant
             let targetId = '';
             if (type === 'auto') targetId = 'autoFields';
             else if (type === 'home' || type === 'business') targetId = 'propertyFields';
             else if (type === 'boat') targetId = 'boatFields';
             else if (type === 'life' || type === 'medical' || type === 'tour') targetId = 'contactFields';
 
-            if (targetId) {
-                document.getElementById(targetId).style.display = 'block';
-                document.getElementById(targetId).querySelectorAll('[data-field]').forEach(input => {
-                    input.setAttribute('name', input.getAttribute('data-field'));
-                });
-            }
-            
-            // 3. Handle messageBox for all except contact types
             if (targetId && targetId !== 'contactFields') {
+                document.getElementById(targetId).style.display = 'block';
                 document.getElementById('messageBox').style.display = 'block';
-                const noteInput = document.querySelector('[data-field="notes"]');
-                noteInput.setAttribute('name', 'notes');
+                document.getElementById(targetId).querySelectorAll('[data-field]').forEach(i => i.setAttribute('name', i.getAttribute('data-field')));
+                document.querySelector('[data-field="notes"]').setAttribute('name', 'notes');
+            } else if (targetId === 'contactFields') {
+                document.getElementById('contactFields').style.display = 'block';
             }
         }
     </script>
