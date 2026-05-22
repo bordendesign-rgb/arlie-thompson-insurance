@@ -30,7 +30,6 @@
         label { display: block; margin-bottom: 8px; font-weight: 600; }
         input, select, textarea { width: 100%; padding: 14px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
         
-        /* Using a class for initial hidden state */
         .hidden-section { display: none; }
         
         .btn-submit { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.3s; text-align: center; display: block; text-decoration: none; }
@@ -89,27 +88,27 @@
 
             <div id="autoFields" class="hidden-section">
                 <label>Make, Model & Year</label>
-                <input type="text" name="auto-details">
+                <input type="text" data-field="auto-details">
                 <label>Coverage Value</label>
-                <input type="number" name="auto-value">
+                <input type="number" data-field="auto-value">
             </div>
 
             <div id="propertyFields" class="hidden-section">
                 <label>Type of Construction</label>
-                <select name="construction-type">
+                <select data-field="construction-type">
                     <option>Wood</option>
                     <option>Concrete</option>
                     <option>Mixed</option>
                 </select>
                 <label>Building Value</label>
-                <input type="number" name="building-value">
+                <input type="number" data-field="building-value">
             </div>
 
             <div id="boatFields" class="hidden-section">
                 <label>Boat Size</label>
-                <input type="text" name="boat-size">
+                <input type="text" data-field="boat-size">
                 <label>Hull Value</label>
-                <input type="number" name="hull-value">
+                <input type="number" data-field="hull-value">
             </div>
 
             <div id="contactFields" class="hidden-section">
@@ -119,7 +118,7 @@
 
             <div id="messageBox" class="hidden-section">
                 <label>Additional Notes</label>
-                <textarea name="notes" rows="4"></textarea>
+                <textarea data-field="notes" rows="4"></textarea>
                 <button type="submit" class="btn-submit">Submit Request</button>
             </div>
         </form>
@@ -130,21 +129,31 @@
         
         function showFields() {
             const type = document.getElementById('insuranceType').value;
-            // Hide all sections initially
-            document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none');
+            // 1. Hide all sections and REMOVE names from all inputs
+            document.querySelectorAll('.hidden-section').forEach(el => {
+                el.style.display = 'none';
+                el.querySelectorAll('[data-field]').forEach(input => input.removeAttribute('name'));
+            });
             
-            // Show only the relevant section
-            if (type === 'auto') {
-                document.getElementById('autoFields').style.display = 'block';
+            // 2. Determine target section and ADD names to its inputs
+            let targetId = '';
+            if (type === 'auto') targetId = 'autoFields';
+            else if (type === 'home' || type === 'business') targetId = 'propertyFields';
+            else if (type === 'boat') targetId = 'boatFields';
+            else if (type === 'life' || type === 'medical' || type === 'tour') targetId = 'contactFields';
+
+            if (targetId) {
+                document.getElementById(targetId).style.display = 'block';
+                document.getElementById(targetId).querySelectorAll('[data-field]').forEach(input => {
+                    input.setAttribute('name', input.getAttribute('data-field'));
+                });
+            }
+            
+            // 3. Handle messageBox for all except contact types
+            if (targetId && targetId !== 'contactFields') {
                 document.getElementById('messageBox').style.display = 'block';
-            } else if (type === 'home' || type === 'business') {
-                document.getElementById('propertyFields').style.display = 'block';
-                document.getElementById('messageBox').style.display = 'block';
-            } else if (type === 'boat') {
-                document.getElementById('boatFields').style.display = 'block';
-                document.getElementById('messageBox').style.display = 'block';
-            } else if (type === 'life' || type === 'medical' || type === 'tour') {
-                document.getElementById('contactFields').style.display = 'block';
+                const noteInput = document.querySelector('[data-field="notes"]');
+                noteInput.setAttribute('name', 'notes');
             }
         }
     </script>
