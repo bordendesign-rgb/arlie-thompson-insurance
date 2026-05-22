@@ -161,27 +161,31 @@
         
         function updateForm() {
             const type = document.getElementById('insuranceType').value;
-            // Hide all and remove names
             const sections = ['autoFields', 'propertyFields', 'boatFields', 'contactFields', 'messageBox'];
+            
+            // 1. Hide all and strip names
             sections.forEach(id => {
                 document.getElementById(id).classList.add('hidden');
                 document.querySelectorAll('#' + id + ' [data-name]').forEach(el => el.removeAttribute('name'));
             });
 
-            // Show selected and add names back
+            // 2. Identify active section
             let activeId = '';
             if(type === 'auto') activeId = 'autoFields';
             else if(type === 'home' || type === 'business') activeId = 'propertyFields';
             else if(type === 'boat') activeId = 'boatFields';
             else if(type === 'life' || type === 'medical' || type === 'tour') activeId = 'contactFields';
 
+            // 3. Show active section and re-add names
             if(activeId) {
                 document.getElementById(activeId).classList.remove('hidden');
                 document.querySelectorAll('#' + activeId + ' [data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
-            }
-            if(activeId && activeId !== 'contactFields') {
-                document.getElementById('messageBox').classList.remove('hidden');
-                document.querySelectorAll('#messageBox [data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
+                
+                // 4. Always show and name the message box if a valid insurance type is selected
+                if(activeId !== 'contactFields') {
+                    document.getElementById('messageBox').classList.remove('hidden');
+                    document.querySelectorAll('#messageBox [data-name]').forEach(el => el.setAttribute('name', el.dataset.name));
+                }
             }
         }
     </script>
