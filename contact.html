@@ -25,7 +25,6 @@
         .page-container { max-width: 800px; margin: 0 auto; padding: 80px 6%; }
         h1 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 30px; text-align: center; font-size: 2.5rem; }
         
-        /* Contact Image */
         .contact-img { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
         .contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
@@ -88,16 +87,16 @@
             </div>
         </div>
 
-        <form>
+        <form name="general-inquiry" data-netlify="true">
             <h2>General Inquiry</h2>
             <label>Name</label>
-            <input type="text" required>
+            <input type="text" name="name" required>
             <label>Email</label>
-            <input type="email" required>
+            <input type="email" name="email" required>
             <label>Subject</label>
-            <input type="text">
+            <input type="text" name="subject">
             <label>Message</label>
-            <textarea rows="5" required></textarea>
+            <textarea name="message" rows="5" required></textarea>
             <button type="submit" class="btn-submit">Send Message</button>
         </form>
     </main>

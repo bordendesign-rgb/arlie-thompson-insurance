@@ -24,7 +24,6 @@
 
         .page-container { max-width: 800px; margin: 0 auto; padding: 80px 6%; }
         
-        /* New Hero Image Style */
         .quote-hero-img { width: 100%; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
         h1 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 30px; text-align: center; font-size: 2.5rem; }
@@ -71,13 +70,13 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form id="quoteForm">
+        <form id="quoteForm" name="quote-request" data-netlify="true">
             <label>Full Name</label>
-            <input type="text" required>
+            <input type="text" name="name" required>
             <label>Email Address</label>
-            <input type="email" required>
+            <input type="email" name="email" required>
             <label>Insurance Type</label>
-            <select id="insuranceType" onchange="updateForm()" required>
+            <select id="insuranceType" name="insurance-type" onchange="updateForm()" required>
                 <option value="">Select an option</option>
                 <option value="auto">Auto</option>
                 <option value="home">Home</option>
@@ -90,43 +89,43 @@
 
             <div id="autoFields" class="hidden">
                 <label>Make, Model & Year</label>
-                <input type="text" placeholder="e.g. Toyota Hilux 2022">
+                <input type="text" name="auto-details" placeholder="e.g. Toyota Hilux 2022">
                 <label>Coverage Value</label>
-                <input type="number" placeholder="Value in USD">
+                <input type="number" name="auto-value" placeholder="Value in USD">
                 <div class="note">Note: Any vehicle 15 years or older can only apply to liability.</div>
             </div>
 
             <div id="propertyFields" class="hidden">
                 <label>Type of Construction</label>
-                <select>
+                <select name="construction-type">
                     <option>Wood</option>
                     <option>Concrete</option>
                     <option>Mixed (50% concrete / 50% wood)</option>
                 </select>
                 <label>Island Location</label>
-                <input type="text">
+                <input type="text" name="location">
                 <label>Building Value</label>
-                <input type="number">
+                <input type="number" name="building-value">
                 <label>Content Value</label>
-                <input type="number">
+                <input type="number" name="content-value">
                 <div class="note">Note: Land value is excluded from building replacement coverage.</div>
             </div>
 
             <div id="boatFields" class="hidden">
                 <label>Boat Size</label>
-                <input type="text">
+                <input type="text" name="boat-size">
                 <label>Type</label>
-                <input type="text" placeholder="e.g. Center Console, Catamaran">
+                <input type="text" name="boat-type" placeholder="e.g. Center Console, Catamaran">
                 <label>Engine(s)</label>
-                <input type="text">
+                <input type="text" name="engines">
                 <label>Hull Value</label>
-                <input type="number">
+                <input type="number" name="hull-value">
                 <label>Engine(s) Value</label>
-                <input type="number">
+                <input type="number" name="engine-value">
                 <label>Electronics Value</label>
-                <input type="number">
+                <input type="number" name="electronics-value">
                 <label>Liability Coverage</label>
-                <select>
+                <select name="liability">
                     <option>No, thanks</option>
                     <option>Yes, please include</option>
                 </select>
@@ -134,12 +133,12 @@
 
             <div id="contactFields" class="hidden">
                 <div class="note">For this specialized request, Brennan Thompson personally handles your inquiry. Please contact us directly via WhatsApp.</div>
-                <a href="#" class="btn-submit">Chat on WhatsApp</a>
+                <a href="https://wa.me/50432044668" class="btn-submit">Chat on WhatsApp</a>
             </div>
 
             <div id="messageBox" class="hidden">
                 <label>Additional Notes</label>
-                <textarea rows="4"></textarea>
+                <textarea name="notes" rows="4"></textarea>
                 <button type="submit" class="btn-submit" style="border: none; width: 100%;">Submit Request</button>
             </div>
         </form>

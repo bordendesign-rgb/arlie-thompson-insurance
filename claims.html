@@ -70,15 +70,16 @@
     <main class="page-container">
         <img src="at-insurance-5.jpeg" alt="Assistance and Support" class="claim-img">
         <h1>File a Claim</h1>
-        <form id="claimForm">
+        
+        <form id="claimForm" name="claim-submission" data-netlify="true" enctype="multipart/form-data">
             <label>Full Name</label>
-            <input type="text" required>
+            <input type="text" name="name" required>
             <label>Email Address</label>
-            <input type="email" required>
+            <input type="email" name="email" required>
             <label>Policy Number</label>
-            <input type="text" required>
+            <input type="text" name="policy-number" required>
             <label>Claim Type</label>
-            <select id="claimType" onchange="updateClaimForm()" required>
+            <select id="claimType" name="claim-type" onchange="updateClaimForm()" required>
                 <option value="">Select an option</option>
                 <option value="auto">Auto</option>
                 <option value="boat">Boat</option>
@@ -91,25 +92,25 @@
 
             <div id="assetFields" class="hidden">
                 <label>Make, Model & Year</label>
-                <input type="text" placeholder="e.g. Toyota Hilux 2022">
+                <input type="text" name="vehicle-details" placeholder="e.g. Toyota Hilux 2022">
             </div>
 
             <label>Third Party Involved?</label>
-            <select id="thirdParty" onchange="togglePolice()">
+            <select id="thirdParty" name="third-party" onchange="togglePolice()">
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
             </select>
 
             <label>Upload Repair Quotes / Invoices</label>
-            <input type="file" accept=".pdf, .jpg, .png, .jpeg">
+            <input type="file" name="repair-files" accept=".pdf, .jpg, .png, .jpeg">
 
             <div id="policeUpload" class="hidden">
                 <label>Upload Police Statement</label>
-                <input type="file" accept=".pdf, .jpg, .png, .jpeg">
+                <input type="file" name="police-statement" accept=".pdf, .jpg, .png, .jpeg">
             </div>
 
             <label>Brief Description of Incident</label>
-            <textarea rows="4"></textarea>
+            <textarea name="description" rows="4"></textarea>
 
             <button type="submit" class="btn-submit">Submit Claim</button>
         </form>
