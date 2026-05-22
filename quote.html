@@ -70,7 +70,7 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form id="quoteForm" name="quote-request" data-netlify="true">
+        <form id="quoteForm" name="quote-request" data-netlify="true" onsubmit="prepareForm()">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
@@ -158,6 +158,7 @@
 
     <script>
         function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+        
         function updateForm() {
             const type = document.getElementById('insuranceType').value;
             document.getElementById('autoFields').classList.add('hidden');
@@ -170,6 +171,12 @@
             else if(type === 'home' || type === 'business') { document.getElementById('propertyFields').classList.remove('hidden'); document.getElementById('messageBox').classList.remove('hidden'); }
             else if(type === 'boat') { document.getElementById('boatFields').classList.remove('hidden'); document.getElementById('messageBox').classList.remove('hidden'); }
             else if(type === 'life' || type === 'medical' || type === 'tour') { document.getElementById('contactFields').classList.remove('hidden'); }
+        }
+
+        function prepareForm() {
+            // Disable all inputs that are currently hidden
+            const hiddenElements = document.querySelectorAll('.hidden input, .hidden select, .hidden textarea');
+            hiddenElements.forEach(el => el.disabled = true);
         }
     </script>
 </body>

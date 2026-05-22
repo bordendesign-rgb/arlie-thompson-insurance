@@ -71,7 +71,7 @@
         <img src="at-insurance-5.jpeg" alt="Assistance and Support" class="claim-img">
         <h1>File a Claim</h1>
         
-        <form id="claimForm" name="claim-submission" data-netlify="true" enctype="multipart/form-data">
+        <form id="claimForm" name="claim-submission" data-netlify="true" enctype="multipart/form-data" onsubmit="prepareClaimForm()">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
@@ -153,6 +153,12 @@
             const div = document.getElementById('policeUpload');
             if(val === 'yes') div.classList.remove('hidden');
             else div.classList.add('hidden');
+        }
+
+        function prepareClaimForm() {
+            // Disable hidden inputs so they don't appear in the email
+            const hiddenElements = document.querySelectorAll('.hidden input, .hidden select, .hidden textarea');
+            hiddenElements.forEach(el => el.disabled = true);
         }
     </script>
 </body>
