@@ -69,62 +69,63 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form name="quote-request" method="POST" data-netlify="true">
-            <label>Full Name</label>
-            <input type="text" name="name" required>
-            <label>Email Address</label>
-            <input type="email" name="email" required>
-            <label>Insurance Type</label>
-            <select id="insuranceType" name="insurance-type" onchange="showFields()" required>
-                <option value="">Select an option</option>
-                <option value="auto">Auto</option>
-                <option value="home">Home</option>
-                <option value="business">Business</option>
-                <option value="boat">Boat</option>
-                <option value="life">Life (Contact Us)</option>
-                <option value="medical">Medical (Contact Us)</option>
-                <option value="tour">Tour Operations (Contact Us)</option>
-            </select>
+        <form name="quote-request" method="POST" data-netlify="true" onsubmit="prepareForm()">
+    <label>Full Name</label>
+    <input type="text" name="name" required>
+    <label>Email Address</label>
+    <input type="email" name="email" required>
+    <label>Insurance Type</label>
+    <select id="insuranceType" name="insurance-type" onchange="showFields()" required>
+        <option value="">Select an option</option>
+        <option value="auto">Auto</option>
+        <option value="home">Home</option>
+        <option value="business">Business</option>
+        <option value="boat">Boat</option>
+        <option value="life">Life (Contact Us)</option>
+        <option value="medical">Medical (Contact Us)</option>
+        <option value="tour">Tour Operations (Contact Us)</option>
+    </select>
 
-            <div id="autoFields" class="hidden-section">
-                <label>Make, Model & Year</label>
-                <input type="text" data-field="auto-details">
-                <label>Coverage Value</label>
-                <input type="number" data-field="auto-value">
-            </div>
+    <div id="autoFields" class="hidden-section">
+        <label>Make, Model & Year</label>
+        <input type="text" data-field="auto-details">
+        <label>Coverage Value</label>
+        <input type="number" data-field="auto-value">
+    </div>
+    <div id="messageBox" class="hidden-section">
+        <label>Additional Notes</label>
+        <textarea data-field="notes" rows="4"></textarea>
+        <button type="submit" class="btn-submit">Submit Request</button>
+    </div>
+</form>
 
-            <div id="propertyFields" class="hidden-section">
-                <label>Type of Construction</label>
-                <select data-field="construction-type">
-                    <option>Wood</option>
-                    <option>Concrete</option>
-                    <option>Mixed</option>
-                </select>
-                <label>Building Value</label>
-                <input type="number" data-field="building-value">
-            </div>
+<script>
+    function showFields() {
+        const type = document.getElementById('insuranceType').value;
+        document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none');
+        
+        if (type === 'auto') { document.getElementById('autoFields').style.display = 'block'; document.getElementById('messageBox').style.display = 'block'; }
+        else if (type === 'home' || type === 'business') { document.getElementById('propertyFields').style.display = 'block'; document.getElementById('messageBox').style.display = 'block'; }
+        else if (type === 'boat') { document.getElementById('boatFields').style.display = 'block'; document.getElementById('messageBox').style.display = 'block'; }
+        else if (type === 'life' || type === 'medical' || type === 'tour') { document.getElementById('contactFields').style.display = 'block'; }
+    }
 
-            <div id="boatFields" class="hidden-section">
-                <label>Boat Size</label>
-                <input type="text" data-field="boat-size">
-                <label>Hull Value</label>
-                <input type="number" data-field="hull-value">
-            </div>
-
-            <div id="contactFields" class="hidden-section">
-                <div class="note">Please contact us via WhatsApp.</div>
-                <a href="https://wa.me/50432044668" class="btn-submit">Chat on WhatsApp</a>
-            </div>
-
-            <div id="messageBox" class="hidden-section">
-                <label>Additional Notes</label>
-                <textarea data-field="notes" rows="4"></textarea>
-                <button type="submit" class="btn-submit">Submit Request</button>
-            </div>
-        </form>
-    </main>
-
-    <script>
+    function prepareForm() {
+        // Find the visible section
+        const visibleSection = document.querySelector('.hidden-section:not([style*="display: none"])');
+        if (visibleSection) {
+            visibleSection.querySelectorAll('[data-field]').forEach(input => {
+                input.setAttribute('name', input.getAttribute('data-field'));
+            });
+        }
+        // Always handle notes
+        const msgBox = document.getElementById('messageBox');
+        if (msgBox.style.display !== 'none') {
+            const noteInput = document.querySelector('[data-field="notes"]');
+            noteInput.setAttribute('name', 'notes');
+        }
+    }
+</script>
         function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
         
         function showFields() {
