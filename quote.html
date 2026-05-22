@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get a Quote | Arlie Thompson Insurance</title>
     
-    <link rel="icon" href="borden-logo.png" type="image/png">
+    <link rel="icon" href="arlie-thompson-logo-2.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -23,18 +23,21 @@
         .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--primary); }
 
         .page-container { max-width: 800px; margin: 0 auto; padding: 80px 6%; }
+        
         .quote-hero-img { width: 100%; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
         h1 { font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 30px; text-align: center; font-size: 2.5rem; }
         
         form { background: var(--light); padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         label { display: block; margin-bottom: 8px; font-weight: 600; }
         input, select, textarea { width: 100%; padding: 14px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
         
-        .hidden-section { display: none; }
-        
+        .hidden { display: none; }
         .btn-submit { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer; transition: background 0.3s; text-align: center; display: block; text-decoration: none; }
         .btn-submit:hover { background: var(--secondary); color: white; }
         
+        .note { background: #eef6ff; padding: 15px; border-left: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.9rem; color: #333; }
+
         footer { background: var(--dark); color: white; padding: 50px 6%; text-align: center; margin-top: 50px; }
         .footer-content { max-width: 800px; margin: 0 auto; }
         .social-links { margin: 20px 0; display: flex; justify-content: center; gap: 30px; }
@@ -52,7 +55,7 @@
 <body>
 
     <header>
-        <div class="logo-container"><img src="borden-logo.png" alt="Arlie Thompson Insurance"></div>
+        <div class="logo-container"><img src="arlie-thompson-logo-2.png" alt="Arlie Thompson Insurance"></div>
         <div class="menu-toggle" onclick="toggleMenu()">☰</div>
         <nav class="nav-links" id="navLinks">
             <a href="index.html">Home</a>
@@ -67,13 +70,13 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form name="quote-request" method="POST" data-netlify="true">
+        <form id="quoteForm" name="quote-request" data-netlify="true">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
             <input type="email" name="email" required>
             <label>Insurance Type</label>
-            <select id="insuranceType" name="insurance-type" onchange="showFields()" required>
+            <select id="insuranceType" name="insurance-type" onchange="updateForm()" required>
                 <option value="">Select an option</option>
                 <option value="auto">Auto</option>
                 <option value="home">Home</option>
@@ -84,40 +87,59 @@
                 <option value="tour">Tour Operations (Contact Us)</option>
             </select>
 
-            <div id="autoFields" class="hidden-section">
+            <div id="autoFields" class="hidden">
                 <label>Make, Model & Year</label>
-                <input type="text" data-field="auto-details">
+                <input type="text" name="auto-details" placeholder="e.g. Toyota Hilux 2022" disabled>
                 <label>Coverage Value</label>
-                <input type="number" data-field="auto-value">
+                <input type="number" name="auto-value" placeholder="Value in USD" disabled>
+                <div class="note">Note: Any vehicle 15 years or older can only apply to liability.</div>
             </div>
 
-            <div id="propertyFields" class="hidden-section">
+            <div id="propertyFields" class="hidden">
                 <label>Type of Construction</label>
-                <select data-field="construction-type">
+                <select name="construction-type" disabled>
                     <option>Wood</option>
                     <option>Concrete</option>
-                    <option>Mixed</option>
+                    <option>Mixed (50% concrete / 50% wood)</option>
                 </select>
+                <label>Island Location</label>
+                <input type="text" name="location" disabled>
                 <label>Building Value</label>
-                <input type="number" data-field="building-value">
+                <input type="number" name="building-value" disabled>
+                <label>Content Value</label>
+                <input type="number" name="content-value" disabled>
+                <div class="note">Note: Land value is excluded from building replacement coverage.</div>
             </div>
 
-            <div id="boatFields" class="hidden-section">
+            <div id="boatFields" class="hidden">
                 <label>Boat Size</label>
-                <input type="text" data-field="boat-size">
+                <input type="text" name="boat-size" disabled>
+                <label>Type</label>
+                <input type="text" name="boat-type" placeholder="e.g. Center Console, Catamaran" disabled>
+                <label>Engine(s)</label>
+                <input type="text" name="engines" disabled>
                 <label>Hull Value</label>
-                <input type="number" data-field="hull-value">
+                <input type="number" name="hull-value" disabled>
+                <label>Engine(s) Value</label>
+                <input type="number" name="engine-value" disabled>
+                <label>Electronics Value</label>
+                <input type="number" name="electronics-value" disabled>
+                <label>Liability Coverage</label>
+                <select name="liability" disabled>
+                    <option>No, thanks</option>
+                    <option>Yes, please include</option>
+                </select>
             </div>
 
-            <div id="contactFields" class="hidden-section">
-                <p>Please contact us via WhatsApp.</p>
+            <div id="contactFields" class="hidden">
+                <div class="note">For this specialized request, Brennan Thompson personally handles your inquiry. Please contact us directly via WhatsApp.</div>
                 <a href="https://wa.me/50432044668" class="btn-submit">Chat on WhatsApp</a>
             </div>
 
-            <div id="messageBox" class="hidden-section">
+            <div id="messageBox" class="hidden">
                 <label>Additional Notes</label>
-                <textarea data-field="notes" rows="4"></textarea>
-                <button type="submit" class="btn-submit">Submit Request</button>
+                <textarea name="notes" rows="4" disabled></textarea>
+                <button type="submit" class="btn-submit" style="border: none; width: 100%;">Submit Request</button>
             </div>
         </form>
     </main>
@@ -136,29 +158,36 @@
 
     <script>
         function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
-        
-        function showFields() {
+        function updateForm() {
             const type = document.getElementById('insuranceType').value;
-            // Clear current name attributes to keep submission clean
-            document.querySelectorAll('[data-field]').forEach(input => input.removeAttribute('name'));
-            document.querySelectorAll('.hidden-section').forEach(el => el.style.display = 'none');
+            // Hide all
+            document.getElementById('autoFields').classList.add('hidden');
+            document.getElementById('propertyFields').classList.add('hidden');
+            document.getElementById('boatFields').classList.add('hidden');
+            document.getElementById('contactFields').classList.add('hidden');
+            document.getElementById('messageBox').classList.add('hidden');
             
-            let targetId = '';
-            if (type === 'auto') targetId = 'autoFields';
-            else if (type === 'home' || type === 'business') targetId = 'propertyFields';
-            else if (type === 'boat') targetId = 'boatFields';
-            else if (type === 'life' || type === 'medical' || type === 'tour') targetId = 'contactFields';
+            // Disable all inputs in hidden sections
+            document.querySelectorAll('#autoFields input, #autoFields select, #propertyFields input, #propertyFields select, #boatFields input, #boatFields select, #messageBox textarea').forEach(el => el.disabled = true);
 
-            if (targetId) {
-                document.getElementById(targetId).style.display = 'block';
-                document.getElementById(targetId).querySelectorAll('[data-field]').forEach(input => {
-                    input.setAttribute('name', input.getAttribute('data-field'));
-                });
-                
-                if (targetId !== 'contactFields') {
-                    document.getElementById('messageBox').style.display = 'block';
-                    document.querySelector('[data-field="notes"]').setAttribute('name', 'notes');
-                }
+            // Show selected and enable
+            if(type === 'auto') { 
+                document.getElementById('autoFields').classList.remove('hidden'); 
+                document.getElementById('messageBox').classList.remove('hidden');
+                document.querySelectorAll('#autoFields input, #autoFields select, #messageBox textarea').forEach(el => el.disabled = false);
+            }
+            else if(type === 'home' || type === 'business') { 
+                document.getElementById('propertyFields').classList.remove('hidden'); 
+                document.getElementById('messageBox').classList.remove('hidden');
+                document.querySelectorAll('#propertyFields input, #propertyFields select, #messageBox textarea').forEach(el => el.disabled = false);
+            }
+            else if(type === 'boat') { 
+                document.getElementById('boatFields').classList.remove('hidden'); 
+                document.getElementById('messageBox').classList.remove('hidden');
+                document.querySelectorAll('#boatFields input, #boatFields select, #messageBox textarea').forEach(el => el.disabled = false);
+            }
+            else if(type === 'life' || type === 'medical' || type === 'tour') { 
+                document.getElementById('contactFields').classList.remove('hidden'); 
             }
         }
     </script>
