@@ -62,6 +62,7 @@
             <a href="index.html">Home</a>
             <a href="about.html">About Us</a>
             <a href="quote.html">Get a Quote</a>
+            <a href="help-center.html">Help Center</a>
             <a href="claims.html">Claims</a>
             <a href="contact.html">Contact</a>
         </nav>
@@ -76,6 +77,8 @@
             <input type="text" name="name" required>
             <label>Email Address</label>
             <input type="email" name="email" required>
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="e.g. +504 1234-5678" required>
             <label>Policy Number</label>
             <input type="text" name="policy-number" required>
             <label>Claim Type</label>
@@ -90,6 +93,13 @@
                 <option value="life">Life</option>
             </select>
 
+            <div id="incidentFields" class="hidden">
+                <label>Date of Incident</label>
+                <input type="date" name="incident-date">
+                <label>Time of Incident</label>
+                <input type="time" name="incident-time">
+            </div>
+
             <div id="assetFields" class="hidden">
                 <label>Make, Model & Year</label>
                 <input type="text" data-name="vehicle-details" placeholder="e.g. Toyota Hilux 2022">
@@ -102,11 +112,11 @@
             </select>
 
             <label>Upload Repair Quotes / Invoices</label>
-            <input type="file" name="repair-files" accept=".pdf, .jpg, .png, .jpeg">
+            <input type="file" name="repair-files" accept=".pdf, .jpg, .png, .jpeg" multiple>
 
             <div id="policeUpload" class="hidden">
                 <label>Upload Police Statement</label>
-                <input type="file" data-name="police-statement" accept=".pdf, .jpg, .png, .jpeg">
+                <input type="file" data-name="police-statement" accept=".pdf, .jpg, .png, .jpeg" multiple>
             </div>
 
             <label>Brief Description of Incident</label>
@@ -141,6 +151,16 @@
         function updateClaimForm() {
             const type = document.getElementById('claimType').value;
             const assetDiv = document.getElementById('assetFields');
+            const incidentDiv = document.getElementById('incidentFields');
+            
+            // Show incident fields if any type is selected
+            if(type !== "") {
+                incidentDiv.classList.remove('hidden');
+            } else {
+                incidentDiv.classList.add('hidden');
+            }
+
+            // Handle asset fields logic
             if(type === 'auto' || type === 'boat') {
                 assetDiv.classList.remove('hidden');
                 assetDiv.querySelector('[data-name]').setAttribute('name', 'vehicle-details');

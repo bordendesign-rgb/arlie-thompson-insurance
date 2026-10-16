@@ -61,6 +61,7 @@
             <a href="index.html">Home</a>
             <a href="about.html">About Us</a>
             <a href="quote.html">Get a Quote</a>
+            <a href="help-center.html">Help Center</a>
             <a href="claims.html">Claims</a>
             <a href="contact.html">Contact</a>
         </nav>
@@ -70,11 +71,13 @@
         <img src="at-insurance-3.jpeg" alt="Brennan and Devon Thompson" class="quote-hero-img">
         
         <h1>Request a Quote</h1>
-        <form id="quoteForm" name="quote-request" data-netlify="true">
+        <form id="quoteForm" name="quote-request" data-netlify="true" enctype="multipart/form-data">
             <label>Full Name</label>
             <input type="text" name="name" required>
             <label>Email Address</label>
             <input type="email" name="email" required>
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="e.g. +504 1234-5678" required>
             <label>Insurance Type</label>
             <select id="insuranceType" name="insurance-type" onchange="updateForm()" required>
                 <option value="">Select an option</option>
@@ -108,6 +111,8 @@
                 <input type="text" name="building-value" disabled>
                 <label>Content Value</label>
                 <input type="text" name="content-value" disabled>
+                <label>Upload a photo of the building</label>
+                <input type="file" name="building-photo" accept="image/*" disabled>
                 <div class="note">Note: Land value is excluded from building replacement coverage.</div>
             </div>
 
@@ -125,10 +130,14 @@
                 <label>Electronics Value</label>
                 <input type="text" name="electronics-value" disabled>
                 <label>Liability Coverage</label>
-                <select name="liability" disabled>
-                    <option>No, thanks</option>
-                    <option>Yes, please include</option>
+                <select name="liability" id="liabilitySelect" onchange="toggleLiabilityAmount()" disabled>
+                    <option value="no">No, thanks</option>
+                    <option value="yes">Yes, please include</option>
                 </select>
+                <div id="liabilityAmountField" class="hidden">
+                    <label>Liability Amount (USD)</label>
+                    <input type="text" name="liability-amount" placeholder="e.g. 500,000" disabled>
+                </div>
             </div>
 
             <div id="contactFields" class="hidden">
@@ -157,39 +166,55 @@
     </footer>
 
     <script>
-        function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
-        function updateForm() {
-            const type = document.getElementById('insuranceType').value;
-            // Hide all
-            document.getElementById('autoFields').classList.add('hidden');
-            document.getElementById('propertyFields').classList.add('hidden');
-            document.getElementById('boatFields').classList.add('hidden');
-            document.getElementById('contactFields').classList.add('hidden');
-            document.getElementById('messageBox').classList.add('hidden');
-            
-            // Disable all inputs in hidden sections
-            document.querySelectorAll('#autoFields input, #autoFields select, #propertyFields input, #propertyFields select, #boatFields input, #boatFields select, #messageBox textarea').forEach(el => el.disabled = true);
-
-            // Show selected and enable
-            if(type === 'auto') { 
-                document.getElementById('autoFields').classList.remove('hidden'); 
-                document.getElementById('messageBox').classList.remove('hidden');
-                document.querySelectorAll('#autoFields input, #autoFields select, #messageBox textarea').forEach(el => el.disabled = false);
-            }
-            else if(type === 'home' || type === 'business') { 
-                document.getElementById('propertyFields').classList.remove('hidden'); 
-                document.getElementById('messageBox').classList.remove('hidden');
-                document.querySelectorAll('#propertyFields input, #propertyFields select, #messageBox textarea').forEach(el => el.disabled = false);
-            }
-            else if(type === 'boat') { 
-                document.getElementById('boatFields').classList.remove('hidden'); 
-                document.getElementById('messageBox').classList.remove('hidden');
-                document.querySelectorAll('#boatFields input, #boatFields select, #messageBox textarea').forEach(el => el.disabled = false);
-            }
-            else if(type === 'life' || type === 'medical' || type === 'tour') { 
-                document.getElementById('contactFields').classList.remove('hidden'); 
-            }
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+    
+    function toggleLiabilityAmount() {
+        const select = document.getElementById('liabilitySelect');
+        const field = document.getElementById('liabilityAmountField');
+        const input = field.querySelector('input');
+        if (select.value === 'yes') {
+            field.classList.remove('hidden');
+            input.disabled = false;
+        } else {
+            field.classList.add('hidden');
+            input.disabled = true;
         }
-    </script>
+    }
+
+    function updateForm() {
+        const type = document.getElementById('insuranceType').value;
+        // Hide all
+        document.getElementById('autoFields').classList.add('hidden');
+        document.getElementById('propertyFields').classList.add('hidden');
+        document.getElementById('boatFields').classList.add('hidden');
+        document.getElementById('contactFields').classList.add('hidden');
+        document.getElementById('messageBox').classList.add('hidden');
+        document.getElementById('liabilityAmountField').classList.add('hidden'); // Reset liability field
+        
+        // Disable all inputs in hidden sections
+        document.querySelectorAll('#autoFields input, #autoFields select, #propertyFields input, #propertyFields select, #boatFields input, #boatFields select, #messageBox textarea').forEach(el => el.disabled = true);
+
+        // Show selected and enable
+        if(type === 'auto') { 
+            document.getElementById('autoFields').classList.remove('hidden'); 
+            document.getElementById('messageBox').classList.remove('hidden');
+            document.querySelectorAll('#autoFields input, #autoFields select, #messageBox textarea').forEach(el => el.disabled = false);
+        }
+        else if(type === 'home' || type === 'business') { 
+            document.getElementById('propertyFields').classList.remove('hidden'); 
+            document.getElementById('messageBox').classList.remove('hidden');
+            document.querySelectorAll('#propertyFields input, #propertyFields select, #messageBox textarea').forEach(el => el.disabled = false);
+        }
+        else if(type === 'boat') { 
+            document.getElementById('boatFields').classList.remove('hidden'); 
+            document.getElementById('messageBox').classList.remove('hidden');
+            document.querySelectorAll('#boatFields input, #boatFields select, #messageBox textarea').forEach(el => el.disabled = false);
+            toggleLiabilityAmount(); // Check initial state
+        }
+        else if(type === 'life' || type === 'medical' || type === 'tour') { 
+            document.getElementById('contactFields').classList.remove('hidden'); 
+        }
+    }
+</script>
 </body>
 </html>
